@@ -8,9 +8,9 @@ int main()
     int row =1;
     while (row<=col)
     {
-        int j = 1;
+        int j = 0;
         while(j<=row){
-            cout<<row-j+1<<" ";
+            cout<<row-j<<" ";
             j++;
         }
         row++;
