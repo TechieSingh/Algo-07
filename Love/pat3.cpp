@@ -8,12 +8,10 @@ int main()
     int row =1;
     while (row<=col)
     {
-        int col = 1;
-        int value = row;
-        while(col<=row){
-            cout<<value<<" ";
-            value--;
-            col++;
+        int j = 1;
+        while(j<=row){
+            cout<<row-j+1<<" ";
+            j++;
         }
         row++;
         cout<<endl;
