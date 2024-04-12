@@ -3,15 +3,17 @@ using namespace std;
 
 void swapalternate(int arr[],int size){
 
-int arr2[size];
+
     for (int i = 0; i < size; i+=2)
     {
-        arr2[i]=arr[i+1];
-        arr2[i+1]=arr[i];
-    }
-        for (int i = 0; i < size; i++)
+    if (i+1<size)
     {
-        cout<<arr2[i]<<",";
+        swap(arr[i],arr[i+1]);
+    }
+    }
+     for (int i = 0; i < size; i++)
+    {
+        cout<<arr[i]<<",";
     }
 
 }
