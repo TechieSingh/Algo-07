@@ -1,20 +1,15 @@
 class Solution {
 public:
-    bool uniqueOccurrences(vector<int>& arr) {
-        unordered_map<int, int > mp;
-        unordered_map<int, int> freq;
-        for(int i =0; i<arr.size();i++){
-            mp[arr[i]]++;
-        }
+    bool uniqueOccurrences(std::vector<int>& arr) {
+        std::unordered_map<int, int> mp;
+        std::unordered_set<int> freq;
 
-        for(auto& co: mp){
-            freq[co.second]++;
+        for (int num : arr) {
+            mp[num]++;
         }
-
-        for(auto& po: freq){
-            if(po.second>1)
-            return false;
+        for (const auto& kv : mp) {
+            freq.insert(kv.second);
         }
-        return true;
+        return freq.size() == mp.size();
     }
 };
