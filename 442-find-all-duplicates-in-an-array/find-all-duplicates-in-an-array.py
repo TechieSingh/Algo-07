@@ -1,5 +1,5 @@
-class Solution(object):
-    def findDuplicates(self, nums):
+class Solution:
+    def findDuplicates(self, nums: List[int]) -> List[int]:
         ans = []
         dup = set()
         for num in nums:
@@ -7,3 +7,4 @@ class Solution(object):
                 ans.append(num)
             dup.add(num)
         return ans
+        
