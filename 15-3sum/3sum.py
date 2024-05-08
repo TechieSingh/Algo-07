@@ -9,8 +9,7 @@ class Solution:
             while left<right:
                 total=a+nums[left]+nums[right]
                 if total==0:
-                    vals=[nums[i], nums[left], nums[right]]
-                    result.append(vals)
+                    result.append([nums[i],nums[left],nums[right]])
                     left+=1
                     while nums[left]==nums[left-1] and left<right:
                         left+=1
@@ -20,3 +19,7 @@ class Solution:
                     left+=1
         return result
         
+
+#[-1,0,1,2,-1,-4]
+#[-1,-1,2,0,1]
+#[-1,0,1]
