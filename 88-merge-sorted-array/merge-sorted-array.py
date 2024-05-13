@@ -6,4 +6,8 @@ class Solution:
             nums1[j]=nums2[i]
             j+=1
             i+=1
-        nums1.sort()
+        r=m+n
+        for p in range(r):
+            for k in range(1,r-p):
+                if nums1[k-1]>nums1[k]:
+                    nums1[k-1],nums1[k]=nums1[k],nums1[k-1]
