@@ -11,5 +11,4 @@ class Solution:
                 if len(set(substring)) <= maxLetters:
                     substring_count[substring] += 1
         
-        # Return the maximum frequency of any substring
         return max(substring_count.values(), default=0)
