@@ -16,7 +16,7 @@ class Solution:
             return True
         for j in range(n,m):            
             s2_counts[ord(s2[j]) - ord('a')] += 1
-            s2_counts[ord(s2[start]) - ord('a')] -= 1
+            s2_counts[ord(s2[j-n]) - ord('a')] -= 1
             start += 1
 
             if s1_counts == s2_counts:
