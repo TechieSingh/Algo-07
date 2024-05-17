@@ -1,27 +1,29 @@
 class Solution:
     def checkInclusion(self, s1: str, s2: str) -> bool:
-        from collections import Counter
-
-        len1, len2 = len(s1), len(s2)
-        
-        if len1 > len2:
+        n = len(s1)
+        m = len(s2)
+        start = 0
+        if n > m:
             return False
         
-        s1_count = Counter(s1)
-        window_count = Counter(s2[:len1])
-
-        if s1_count == window_count:
-            return True
+        s1_counts = [0] * 26
+        s2_counts = [0] * 26
+        for i in range(n):
+            s1_counts[ord(s1[i]) - ord('a')] += 1
+            s2_counts[ord(s2[i]) - ord('a')] += 1
         
-        for i in range(len1, len2):
+        if s1_counts == s2_counts:
+            return True
+        for j in range(n,m):            
+            s2_counts[ord(s2[j]) - ord('a')] += 1
+            s2_counts[ord(s2[start]) - ord('a')] -= 1
+            start += 1
 
-            window_count[s2[i]] += 1
-            window_count[s2[i - len1]] -= 1
-
-            if window_count[s2[i - len1]] == 0:
-                del window_count[s2[i - len1]]
-            
-            if s1_count == window_count:
+            if s1_counts == s2_counts:
                 return True
         
         return False
+
+
+
+            
