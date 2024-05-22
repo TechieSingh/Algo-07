@@ -3,7 +3,7 @@ public:
     int maxArea(vector<int>& height) {
         int left=0;
         int right=height.size()-1;
-        int maxi=0;
+        int maxi=INT_MIN;
         while(left<=right)
         {
             int b=right-left;
