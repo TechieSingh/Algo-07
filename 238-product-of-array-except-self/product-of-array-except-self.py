@@ -6,9 +6,9 @@ class Solution:
             b = self.L0238(nums, ans, work, "Brute Force")
         if False:
             b = self.L0238(nums, ans, work, "Use Division")
-        if True:
-            b = self.L0238(nums, ans, work, "n time n space")
         if False:
+            b = self.L0238(nums, ans, work, "n time n space")
+        if True:
             b = self.L0238(nums, ans, work, "n time 1 space")
         
         return ans
