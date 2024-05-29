@@ -4,9 +4,9 @@ class Solution:
         ans = []  
         if False:
             b = self.L0238(nums, ans, work, "Brute Force")
-        if True:
-            b = self.L0238(nums, ans, work, "Use Division")
         if False:
+            b = self.L0238(nums, ans, work, "Use Division")
+        if True:
             b = self.L0238(nums, ans, work, "n time n space")
         if False:
             b = self.L0238(nums, ans, work, "n time 1 space")
@@ -25,9 +25,8 @@ class Solution:
         
         elif method == "Use Division":
             total_product = 1
-            zero_count = nums.count(0)  # Count the number of zeros in the input array
+            zero_count = nums.count(0) 
             if zero_count == 0:
-                # No zero in the array, calculate total product
                 for num in nums:
                     total_product *= num
                 for num in nums:
