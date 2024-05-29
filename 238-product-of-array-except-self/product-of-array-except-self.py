@@ -4,11 +4,11 @@ class Solution:
         ans = []  
         if False:
             b = self.L0238(nums, ans, work, "Brute Force")
-        if False:
+        if True:
             b = self.L0238(nums, ans, work, "Use Division")
         if False:
             b = self.L0238(nums, ans, work, "n time n space")
-        if True:
+        if False:
             b = self.L0238(nums, ans, work, "n time 1 space")
         
         return ans
@@ -25,14 +25,26 @@ class Solution:
         
         elif method == "Use Division":
             total_product = 1
-            for num in nums:
-                if num != 0:
+            zero_count = nums.count(0)  # Count the number of zeros in the input array
+            if zero_count == 0:
+                # No zero in the array, calculate total product
+                for num in nums:
                     total_product *= num
-            for num in nums:
-                if num != 0:
+                for num in nums:
                     ans.append(total_product // num)
-                else:
-                    ans.append(0)  
+            elif zero_count == 1:
+                for num in nums:
+                    if num != 0:
+                        total_product *= num
+                for num in nums:
+                    if num == 0:
+                        ans.append(total_product)
+                    else:
+                        ans.append(0)
+            else:
+                ans.extend([0] * len(nums))
+
+
         
         elif method == "n time n space":
             left = [1] * len(nums)
