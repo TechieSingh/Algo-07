@@ -1,76 +1,87 @@
 class ListNode:
-    def __init__(self, value=0, prev=None, next=None):
-        self.value = value
-        self.prev = prev
+    def __init__(self, val=0, next=None):
+        self.val = val
         self.next = next
+class Slist:
+    def __init__(self):
+        self._first = None
+        self._last = None
+        self._len = 0
+
 
 class MyCircularDeque:
     def __init__(self, k: int):
-        self.head = None
-        self.tail = None
-        self.max_size = k
-        self.size = 0
+        self._capacity = k
+        self._size = 0
+        self._head = None
+        self._tail = None
 
     def insertFront(self, value: int) -> bool:
-        if self.isFull():
+        if self._size == self._capacity:
             return False
         new_node = ListNode(value)
-        if self.isEmpty():
-            self.head = self.tail = new_node
+        if self._size == 0:
+            self._head = self._tail = new_node
+            self._tail.next = self._head
         else:
-            new_node.next = self.head
-            self.head.prev = new_node
-            self.head = new_node
-        self.size += 1
+            new_node.next = self._head
+            self._head = new_node
+            self._tail.next = self._head
+        self._size += 1
         return True
 
     def insertLast(self, value: int) -> bool:
-        if self.isFull():
+        if self._size == self._capacity:
             return False
         new_node = ListNode(value)
-        if self.isEmpty():
-            self.head = self.tail = new_node
+        if self._size == 0:
+            self._head = self._tail = new_node
+            self._tail.next = self._head
         else:
-            self.tail.next = new_node
-            new_node.prev = self.tail
-            self.tail = new_node
-        self.size += 1
+            self._tail.next = new_node
+            self._tail = new_node
+            self._tail.next = self._head
+        self._size += 1
         return True
 
     def deleteFront(self) -> bool:
-        if self.isEmpty():
+        if self._size == 0:
             return False
-        if self.head == self.tail:
-            self.head = self.tail = None
+        if self._size == 1:
+            self._head = self._tail = None
         else:
-            self.head = self.head.next
-            self.head.prev = None
-        self.size -= 1
+            self._head = self._head.next
+            self._tail.next = self._head
+        self._size -= 1
         return True
 
     def deleteLast(self) -> bool:
-        if self.isEmpty():
+        if self._size == 0:
             return False
-        if self.head == self.tail:
-            self.head = self.tail = None
+        if self._size == 1:
+            self._head = self._tail = None
         else:
-            self.tail = self.tail.prev
-            self.tail.next = None
-        self.size -= 1
+            current = self._head
+            while current.next != self._tail:
+                current = current.next
+            current.next = self._head
+            self._tail = current
+        self._size -= 1
         return True
 
     def getFront(self) -> int:
-        if self.isEmpty():
+        if self._size == 0:
             return -1
-        return self.head.value
+        return self._head.val
 
     def getRear(self) -> int:
-        if self.isEmpty():
+        if self._size == 0:
             return -1
-        return self.tail.value
+        return self._tail.val
 
     def isEmpty(self) -> bool:
-        return self.size == 0
+        return self._size == 0
 
     def isFull(self) -> bool:
-        return self.size == self.max_size
+        return self._size == self._capacity
+
