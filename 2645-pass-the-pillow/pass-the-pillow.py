@@ -1,9 +1,8 @@
 class Solution(object):
     def passThePillow(self, n, time):
-        i, d = 1, 1
-        while time:
-            time -= 1
-            i += d
-            if i == 1 or i == n:
-                d = -d
-        return i
+        val = time % (n - 1)
+        if (time // (n - 1)) % 2 == 0:
+            return val + 1
+        else:
+            return n - val
+
