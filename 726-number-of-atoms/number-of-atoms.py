@@ -1,43 +1,65 @@
+from collections import defaultdict
+
 class Solution:
     def countOfAtoms(self, formula: str) -> str:
-        def parse_formula(formula):
-            stack = [collections.defaultdict(int)]
-            i, n = 0, len(formula)
-            
-            while i < n:
-                if formula[i] == '(':
-                    stack.append(collections.defaultdict(int))
+        stack = []
+        map = defaultdict(int)
+        i = 0
+        n = len(formula)
+
+        while i < n:
+            c = formula[i]        
+            i += 1
+
+            if c == '(':
+                stack.append(map)
+                map = defaultdict(int)
+            elif c == ')':
+                val = 0
+                while i < n and formula[i].isdigit():
+                    val = val * 10 + ord(formula[i]) - ord("0")
                     i += 1
-                elif formula[i] == ')':
+
+                if val == 0:
+                    val = 1
+
+                if stack:
+                    temp = map
+                    map = stack.pop()
+                    for k, v in temp.items():
+                        if k in map:
+                            map[k] += temp[k] * val
+                        else:
+                            map[k] = temp[k] * val
+
+
+            else:
+                start = i - 1
+                while i < n and formula[i].islower():
                     i += 1
-                    start = i
-                    while i < n and formula[i].isdigit():
-                        i += 1
-                    multiplier = int(formula[start:i] or 1)
-                    top = stack.pop()
-                    for elem, cnt in top.items():
-                        stack[-1][elem] += cnt * multiplier
-                else:
-                    start = i
+
+                s = formula[start: i]
+                val = 0
+                while i < n and formula[i].isdigit():
+                    val = val * 10 + ord(formula[i]) - ord('0')
                     i += 1
-                    while i < n and formula[i].islower():
-                        i += 1
-                    elem = formula[start:i]
-                    start = i
-                    while i < n and formula[i].isdigit():
-                        i += 1
-                    count = int(formula[start:i] or 1)
-                    stack[-1][elem] += count
-            
-            return stack[0]
+                
+                if val == 0:
+                    val = 1
+
+                map[s] += val
+
+                
+        print(map.items())
+        result = ""
+        for key in sorted(map):
+            result += key
+            if map[key] > 1:
+                result += str(map[key])
+
+        return result
+
+
     
-        element_counts = parse_formula(formula)
-        sorted_elements = sorted(element_counts.items())
-        result = []
+
         
-        for elem, count in sorted_elements:
-            result.append(elem)
-            if count > 1:
-                result.append(str(count))
-        
-        return ''.join(result)
