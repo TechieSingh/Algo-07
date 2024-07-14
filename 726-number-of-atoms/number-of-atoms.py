@@ -1,55 +1,43 @@
 class Solution:
-    def solve(self, i, s, n, prev_map):
-        t = {}
-        
-        while i < n:
-            if s[i] == '(':
-                i = self.solve(i + 1, s, n, t)
-            elif s[i].isupper():
-                temp = s[i]
-                i += 1
-                
-                if i < n and s[i].islower():
-                    temp += s[i]
+    def countOfAtoms(self, formula: str) -> str:
+        def parse_formula(formula):
+            stack = [collections.defaultdict(int)]
+            i, n = 0, len(formula)
+            
+            while i < n:
+                if formula[i] == '(':
+                    stack.append(collections.defaultdict(int))
                     i += 1
-                
-                count = 0
-                while i < n and s[i].isdigit():
-                    count = count * 10 + int(s[i])
+                elif formula[i] == ')':
                     i += 1
-                
-                t[temp] = t.get(temp, 0) + (count if count != 0 else 1)
-                i -= 1
-            elif s[i] == ')':
-                i += 1
-                count = 0
-                while i < n and s[i].isdigit():
-                    count = count * 10 + int(s[i])
+                    start = i
+                    while i < n and formula[i].isdigit():
+                        i += 1
+                    multiplier = int(formula[start:i] or 1)
+                    top = stack.pop()
+                    for elem, cnt in top.items():
+                        stack[-1][elem] += cnt * multiplier
+                else:
+                    start = i
                     i += 1
-                
-                if count > 0:
-                    for key in t:
-                        t[key] *= count
-                    i -= 1
-                
-                for key in t:
-                    prev_map[key] = prev_map.get(key, 0) + t[key]
-                return i - 1
-            i += 1
+                    while i < n and formula[i].islower():
+                        i += 1
+                    elem = formula[start:i]
+                    start = i
+                    while i < n and formula[i].isdigit():
+                        i += 1
+                    count = int(formula[start:i] or 1)
+                    stack[-1][elem] += count
+            
+            return stack[0]
+    
+        element_counts = parse_formula(formula)
+        sorted_elements = sorted(element_counts.items())
+        result = []
         
-        for key in t:
-            prev_map[key] = prev_map.get(key, 0) + t[key]
-        return i
-
-    def countOfAtoms(self, formula):
-        n = len(formula)
-        m = {}
+        for elem, count in sorted_elements:
+            result.append(elem)
+            if count > 1:
+                result.append(str(count))
         
-        self.solve(0, formula, n, m)
-        
-        res = []
-        for key in sorted(m.keys()):
-            res.append(key)
-            if m[key] != 1:
-                res.append(str(m[key]))
-        return ''.join(res)
+        return ''.join(result)
