@@ -6,11 +6,9 @@ class Solution:
         map = defaultdict(int)
         i = 0
         n = len(formula)
-
         while i < n:
             c = formula[i]        
             i += 1
-
             if c == '(':
                 stack.append(map)
                 map = defaultdict(int)
@@ -19,10 +17,8 @@ class Solution:
                 while i < n and formula[i].isdigit():
                     val = val * 10 + ord(formula[i]) - ord("0")
                     i += 1
-
                 if val == 0:
                     val = 1
-
                 if stack:
                     temp = map
                     map = stack.pop()
@@ -31,7 +27,6 @@ class Solution:
                             map[k] += temp[k] * val
                         else:
                             map[k] = temp[k] * val
-
 
             else:
                 start = i - 1
@@ -49,8 +44,6 @@ class Solution:
 
                 map[s] += val
 
-                
-        print(map.items())
         result = ""
         for key in sorted(map):
             result += key
