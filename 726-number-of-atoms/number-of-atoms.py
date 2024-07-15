@@ -1,58 +1,39 @@
-from collections import defaultdict
-
 class Solution:
     def countOfAtoms(self, formula: str) -> str:
-        stack = []
-        map = defaultdict(int)
-        i = 0
-        n = len(formula)
-        while i < n:
-            c = formula[i]        
-            i += 1
-            if c == '(':
-                stack.append(map)
-                map = defaultdict(int)
-            elif c == ')':
-                val = 0
-                while i < n and formula[i].isdigit():
-                    val = val * 10 + ord(formula[i]) - ord("0")
-                    i += 1
-                if val == 0:
-                    val = 1
-                if stack:
-                    temp = map
-                    map = stack.pop()
-                    for k, v in temp.items():
-                        if k in map:
-                            map[k] += temp[k] * val
-                        else:
-                            map[k] = temp[k] * val
-
+        stack = [defaultdict(int)]
+        i=0
+        while i<len(formula):
+            if formula[i]=="(":
+                stack.append(defaultdict(int))
+            elif formula[i]==")":
+                cur_map= stack.pop()
+                count=""
+                while i+1 < len(formula) and formula[i+1].isdigit():
+                    count += formula[i+1]
+                    i+=1
+                count = 1 if not count else int(count)
+                prev_map = stack[-1]
+                for elem in cur_map:
+                    prev_map[elem]+=cur_map[elem]*count
+                      
             else:
-                start = i - 1
-                while i < n and formula[i].islower():
-                    i += 1
-
-                s = formula[start: i]
-                val = 0
-                while i < n and formula[i].isdigit():
-                    val = val * 10 + ord(formula[i]) - ord('0')
-                    i += 1
-                
-                if val == 0:
-                    val = 1
-
-                map[s] += val
-
-        result = ""
-        for key in sorted(map):
-            result += key
-            if map[key] > 1:
-                result += str(map[key])
-
+                element = formula[i]
+                count =""
+                if i+1 < len(formula) and formula[i+1].islower():
+                    element = formula[i:i+2]
+                    i+=1
+                while i+1 < len(formula) and formula[i+1].isdigit():
+                    count += formula[i+1]
+                    i+=1
+                count = 1 if not count else int(count)
+                cur_map= stack[-1]
+                cur_map[element]+=count
+            
+            
+            i+=1
+        cnt_map=stack[-1]
+        result=""
+        for elem in sorted(cnt_map.keys()):
+            count ="" if cnt_map[elem] ==1 else cnt_map[elem]
+            result +=elem +str(count)
         return result
-
-
-    
-
-        
