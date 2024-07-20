@@ -7,6 +7,6 @@ class Solution:
                 res[i][j] = val
                 rowSum[i] -= val
                 colSum[j] -= val
+        return res    
 
-
-        return res        
+       
