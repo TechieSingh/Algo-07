@@ -6,11 +6,11 @@ class Solution:
         left=1
         for j in range(n):
             res[j]=left
-            left=left*nums[j]
+            left*=nums[j]
         
         right=1
         for k in range(n-1,-1,-1):
-            res[k]=res[k]*right
+            res[k]*=right
             right=right*nums[k]
             
         return res
