@@ -1,23 +1,35 @@
 class Solution:
     def numMagicSquaresInside(self, grid: List[List[int]]) -> int:
-        n = len(grid)
-        m = len(grid[0])
-        if n < 3 or m < 3:
+
+        def isMagicSquare(row, col):
+            square = [rowSlice[col:col+3] for rowSlice in grid[row:row+3]]
+            nums = set()
+            for r in square:
+                for val in r:
+                    if val < 1 or val > 9:
+                        return False
+                    nums.add(val)
+            if len(nums) != 9:
+                return False
+            target = sum(square[0])
+            for i in range(3):
+                if sum(square[i]) != target:
+                    return False
+                if square[0][i] + square[1][i] + square[2][i] != target:
+                    return False
+            diag1 = square[0][0] + square[1][1] + square[2][2]
+            diag2 = square[0][2] + square[1][1] + square[2][0]
+            if diag1 != target or diag2 != target:
+                return False
+            return True
+
+        m = len(grid)
+        n = len(grid[0])
+        if m < 3 or n < 3:
             return 0
-        cnt = 0
-        magic_sq = [
-            [[4, 9, 2], [3, 5, 7], [8, 1, 6]],
-            [[2, 7, 6], [9, 5, 1], [4, 3, 8]],
-            [[6, 1, 8], [7, 5, 3], [2, 9, 4]],
-            [[8, 3, 4], [1, 5, 9], [6, 7, 2]],
-            [[4, 3, 8], [9, 5, 1], [2, 7, 6]],
-            [[2, 9, 4], [7, 5, 3], [6, 1, 8]],
-            [[6, 7, 2], [1, 5, 9], [8, 3, 4]],
-            [[8, 1, 6], [3, 5, 7], [4, 9, 2]]
-        ]
-        for r_start in range(n - 2):
-            for c_start in range(m - 2):
-                subgrid = [grid[r_start + i][c_start:c_start + 3] for i in range(3)]
-                if subgrid in magic_sq:
-                    cnt += 1
-        return cnt
+        count = 0
+        for i in range(m - 2):
+            for j in range(n - 2):
+                if isMagicSquare(i, j):
+                    count += 1
+        return count
