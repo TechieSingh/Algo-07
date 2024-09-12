@@ -4,11 +4,8 @@ class Solution:
         count=len(words)
         for each in words:
             b=set(list(each))
-            for i in b:
-                if i not in a:
-                    count-=1
-                    break
-
+            if not b.issubset(a):
+                count-=1
         return count
 
 
